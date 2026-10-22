@@ -1,0 +1,1 @@
+window.AMI_API='';

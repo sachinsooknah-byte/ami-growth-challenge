@@ -1,5 +1,6 @@
 <title>The A.M.I Growth Challenge</title>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{--bg:#F2F3F5;--card:#fff;--ink:#231F20;--mut:#6a6e75;--line:#e1e4e8;--brand:#231F20;--btn:#231F20;--btnt:#fff;--acc:#F9C545;--gt:#C98A00;--ok:#16a34a;--bad:#dc2626}
@@ -269,8 +270,8 @@ button.p{text-transform:uppercase;letter-spacing:.14em;font-weight:900}
 
 <div id="gate" class="card"><h2>Sign in</h2>
 <label for="em">Your email</label><input id="em" type="email" autocomplete="email" placeholder="name@example.com">
-<div id="pwb" hidden><label id="pl" for="pw">Board password</label><input id="pw" type="password" autocomplete="current-password"><div id="pc" hidden><label for="pw2">Confirm password</label><input id="pw2" type="password" autocomplete="new-password"></div></div><button class="p" id="in">Continue</button>
-<p class="mut">Board members create a password the first time they sign in. <b>Demo only: not secure until the shared-database version.</b> Any other email signs in as a normal Tabler.</p></div>
+<div id="pwb" hidden><label id="pl" for="pw">Board password</label><input id="pw" type="password" autocomplete="current-password"><div id="icb" hidden><label for="ic">Access code from the AMI Extension Officer</label><input id="ic" autocomplete="off" autocapitalize="characters" placeholder="8 characters"></div><div id="pc" hidden><label for="pw2">Confirm password</label><input id="pw2" type="password" autocomplete="new-password"></div></div><button class="p" id="in">Continue</button>
+<p class="mut">Board members create a password the first time they sign in. Your access code is sent to you privately and works once. Any other email signs in as a normal Tabler.</p></div>
 
 <div id="app" hidden>
 <div id="bn" class="bn" hidden></div><div class="row"><span id="who"></span><button class="s" id="out">Sign out</button></div>
@@ -323,6 +324,7 @@ button.p{text-transform:uppercase;letter-spacing:.14em;font-weight:900}
 <p class="mut">Includes standings, the award tally and every approved entry with its photo and description. Suitable for the AMI AGM membership and growth item.</p></div></section>
 </div></div><div id="sp" hidden></div><div id="toast"></div>
 <script>
+const API=(typeof window.AMI_API==='string'?window.AMI_API:'');
 const AF='M152.8 4.8Q216.0 0.0 220.0 16.0Q224.0 32.0 256.0 42.0Q288.0 52.0 312.0 46.0Q336.0 40.0 356.0 42.8Q376.0 45.6 386.0 50.8Q396.0 56.0 406.0 80.0Q416.0 104.0 424.0 124.0Q432.0 144.0 440.0 158.0Q448.0 172.0 464.0 184.0Q480.0 196.0 481.2 200.0Q482.4 204.0 513.2 202.8Q544.0 201.6 532.0 228.8Q520.0 256.0 496.0 280.0Q472.0 304.0 464.0 316.0Q456.0 328.0 452.0 344.0Q448.0 360.0 454.0 372.0Q460.0 384.0 460.0 400.0Q460.0 416.0 438.0 436.0Q416.0 456.0 416.0 472.0Q416.0 488.0 407.2 496.0Q398.4 504.0 397.2 516.0Q396.0 528.0 378.0 544.0Q360.0 560.0 336.0 564.8Q312.0 569.6 297.6 569.6Q283.2 569.6 277.6 548.8Q272.0 528.0 262.0 502.0Q252.0 476.0 242.0 454.0Q232.0 432.0 238.0 412.0Q244.0 392.0 242.0 376.0Q240.0 360.0 236.0 348.0Q232.0 336.0 220.0 320.0Q208.0 304.0 210.0 286.0Q212.0 268.0 206.0 264.0Q200.0 260.0 188.0 254.0Q176.0 248.0 160.0 248.0Q144.0 248.0 124.0 251.2Q104.0 254.4 88.0 257.6Q72.0 260.8 52.0 246.4Q32.0 232.0 20.0 214.0Q8.0 196.0 2.0 187.2Q-4.0 178.4 2.0 161.2Q8.0 144.0 4.0 136.0Q0.0 128.0 12.0 108.0Q24.0 88.0 40.0 74.0Q56.0 60.0 58.0 54.0Q60.0 48.0 74.0 28.8Q88.0 9.6 88.8 9.6Q89.6 9.6 152.8 4.8Z',MAD='M534.0 406.0Q540.0 420.0 536.0 438.0Q532.0 456.0 522.0 476.0Q512.0 496.0 500.0 494.0Q488.0 492.0 486.0 478.0Q484.0 464.0 488.0 444.0Q492.0 424.0 502.0 416.0Q512.0 408.0 520.0 400.0Q528.0 392.0 534.0 406.0Z',ARB='M432.0 50.0Q448.0 40.0 468.0 50.0Q488.0 60.0 504.0 58.0Q520.0 56.0 528.0 72.0Q536.0 88.0 544.0 96.0Q552.0 104.0 568.0 96.0Q584.0 88.0 596.0 102.0Q608.0 116.0 592.0 138.0Q576.0 160.0 564.0 164.0Q552.0 168.0 524.0 180.0Q496.0 192.0 488.0 192.0Q480.0 192.0 476.0 176.0Q472.0 160.0 460.0 144.0Q448.0 128.0 436.0 108.0Q424.0 88.0 420.0 74.0Q416.0 60.0 432.0 50.0Z';
 const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const BASE={recommended:5,attended:10,prospect:55,inducted:100},LABEL={recommended:'Guest recommended',attended:'Guest attended',prospect:'New prospect',inducted:'Prospect inducted'};
@@ -360,13 +362,13 @@ const seed=()=>{const e=(id,a,t,n,type,g,d,s,city)=>({id,assoc:a,table:t,tabler:
 return{assocs:[{name:'Mauritius',members:74},{name:'Seychelles',members:40},{name:'Madagascar',members:30},{name:'Eastern Africa',members:150},{name:'Southern Africa',members:250}],pct:20,
 access:ACC0(),votes:{},final:{},tsz:TSZ0(),events:evSeed(),
 entries:[e(1,'Mauritius','Sample Table 1','Sample Tabler A','inducted','Sample Prospect 1','2026-12-14','approved','Port Louis'),e(2,'Seychelles','Sample Table 2','Sample Tabler B','attended','Sample Guest 2','2026-12-12','approved','Victoria'),e(3,'Southern Africa','Sample Table 3','Sample Tabler C','recommended','Sample Guest 3','2026-12-05','approved','Johannesburg'),e(4,'Eastern Africa','Sample Table 4','Sample Tabler D','inducted','Sample Prospect 4','2026-12-18','verified','Nairobi'),e(5,'Mauritius','Sample Table 5','Sample Tabler E','recommended','Sample Guest 5','2026-12-19','submitted','Curepipe'),e(6,'Seychelles','Sample Table 2','Sample Tabler B','inducted','Sample Prospect 6','2026-12-20','approved','Victoria'),e(7,'Madagascar','Sample Table 6','Sample Tabler F','attended','Sample Guest 7','2026-12-21','approved','Antananarivo'),e(8,'Eastern Africa','Sample Table 4','Sample Tabler D','prospect','Sample Prospect 8','2026-12-16','approved','Nairobi')]}};
-let S,U=null,PH=null,PL=null;try{S=JSON.parse(localStorage.getItem(K))}catch(x){}if(!S||!S.assocs)S=seed();if(!S.tsz)S.tsz=TSZ0();
+const SHARED=!!API;let S,U=null,PH=null,PL=null;if(!SHARED){try{S=JSON.parse(localStorage.getItem(K))}catch(x){}}if(!S||!S.assocs)S=seed();if(SHARED)Object.assign(S,{entries:[],events:[],tsz:{},votes:{},final:{}});if(!S.tsz)S.tsz=TSZ0();
 S.access=(S.access||[]).filter(a=>!/@example\.com$/i.test(a.email)).map(a=>a.cat==='National Chairman'?Object.assign({},a,{cat:R.N}):a);
-ACC0().forEach(d=>{const x=S.access.find(a=>a.email===d.email);if(x){x.cat=d.cat;x.name=x.name||d.name}else S.access.push(d)});
+if(!SHARED)ACC0().forEach(d=>{const x=S.access.find(a=>a.email===d.email);if(x){x.cat=d.cat;x.name=x.name||d.name}else S.access.push(d)});
 if(!S.votes)S.votes={};if(!S.final||S.final.winner!==undefined)S.final=S.final&&S.final.winner?{tia:{winner:S.final.winner,by:S.final.by}}:{};delete S.conf;
 S.events.forEach(e=>{if(e.region===undefined){e.country=e.country||(e.assoc==='AMI'?'':countryOf(e.assoc));e.district=e.district||'';e.region=e.assoc==='AMI'?'AMI-wide':regionOf(e.country||e.assoc)}});
 try{U=JSON.parse(localStorage.getItem(KU))}catch(x){}if(U&&U.board)U=null;
-const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(x){msg('Storage full - remove photos or reset sample data')}};
+const save=()=>{if(SHARED){schedPush();return}try{localStorage.setItem(K,JSON.stringify(S))}catch(x){msg('Storage full - remove photos or reset sample data')}};
 const msg=t=>{const o=$('#toast');o.textContent=t;o.classList.add('on');setTimeout(()=>o.classList.remove('on'),3400)};
 const PT=t=>{const v=S&&S.pts&&S.pts[t];return v!=null&&v!==''&&!isNaN(+v)?+v:BASE[t]};
 const pts=e=>PT(e.type);
@@ -518,48 +520,59 @@ $('#g').innerHTML=`<div class="card"><h2>Points per entry</h2><p class="mut">Poi
 <div class="card"><h2>National Associations</h2><p class="mut">Baseline members per National Association. Targets and bonus points are worked out from these numbers.</p>${S.assocs.map((a,i)=>`<div class="row"><span style="flex:1;min-width:0">${esc(a.name)}<small>Target +${Math.ceil((+a.members||0)*S.pct/100)} members</small></span><input class="mi" type="number" min="0" value="${+a.members||0}" data-ai="${i}" aria-label="Members of ${esc(a.name)}"><button class="s r" data-ad="${i}" aria-label="Remove ${esc(a.name)}">${ic('trash',14)}</button></div>`).join('')}
 <label for="an">Add a National Association</label><input id="an" list="asl" autocomplete="off" placeholder="Country or association name"><label for="am">Current members</label><input id="am" type="number" min="0" placeholder="0"><button class="p" data-g="addA">Add association</button></div>
 <div class="card"><h2>Table sizes</h2><p class="mut">Members per Table, used for the Table growth award. Tablers can also add this when they submit an entry.</p>${tszKeys().map(k=>`<div class="row"><span style="flex:1;min-width:0">${esc(tszName(k))}<small>${bandOf(+S.tsz[k]||0)} Table</small></span><input class="mi" type="number" min="0" max="500" value="${+S.tsz[k]||0}" data-ts="${esc(k)}" aria-label="Members of ${esc(tszName(k))}"></div>`).join('')||'<p class="mut">No Table sizes yet.</p>'}</div>
+${SHARED?`<div class="card"><h2>Shared data</h2><p class="mut">Everyone sees the same entries, events, votes and awards. Screens refresh about every 30 seconds. ${esc(SYNMSG())}</p><button class="s" data-g="refresh">Refresh now</button>${hasSample()?`<p class="mut">The app still holds sample entries and events from the demo. Remove them before the real launch.</p><button class="s r" data-g="nosample">${CLR?'Tap again to remove sample data':'Remove sample data'}</button>`:''}</div>`:''}
 <div class="card"><h2>Fair scoring rules</h2><p class="mut">Countries are ranked on inductions as a percentage of members (minimum base ${MINA}). Tables are ranked the same way within size bands (minimum base ${MINT}). Tablers earn a pipeline bonus (+25 for the 3rd new prospect, +50 for the 3rd inducted guest). The top 3 Growth Champions earn +${GCP[0]}, +${GCP[1]}, +${GCP[2]} toward Tabler of the Year.</p></div>
 <div class="card"><h2>Board access</h2><p class="mut">Board Officers see everything and approve entries. The AMI Chairman approves the final awards. Country Presidents and Club Chairmen confirm entries for their country or Table. Everyone else signs in as a normal Tabler.</p>
-${S.access.map((a,i)=>`<div class="row"><span style="flex:1;min-width:0">${esc(a.name||a.email)}<small>${esc(a.email)} · ${esc(a.cat)}${a.assoc?' · '+esc(a.assoc):''}${a.table?' · '+esc(a.table):''}</small></span>${a.cat===R.X?'':`<button class="s r" data-bd="${i}" aria-label="Remove ${esc(a.email)}">${ic('trash',14)}</button>`}</div>`).join('')}
-<label for="bn">Add a person: name</label><input id="bn" autocomplete="off" placeholder="Full name">
+${S.access.map((a,i)=>`<div class="row"><span style="flex:1;min-width:0">${esc(a.name||a.email)}<small>${esc(a.email)} · ${esc(a.cat)}${a.assoc?' · '+esc(a.assoc):''}${a.table?' · '+esc(a.table):''}</small></span>${SHARED?`<button class="s" data-inv="${i}">New code</button>`:''}${a.cat===R.X?'':`<button class="s r" data-bd="${i}" aria-label="Remove ${esc(a.email)}">${ic('trash',14)}</button>`}</div>`).join('')}
+${CODE?`<div class="row" style="display:block;border:1.5px solid var(--gt)"><b>Access code for ${esc(CODE.email)}</b><div style="font-size:26px;letter-spacing:.2em;font-weight:700">${esc(CODE.code)}</div><small>Send this privately. They use it once, with their email, to create their password. It expires in 7 days.</small></div>`:''}
+<label for="bnm">Add a person: name</label><input id="bnm" autocomplete="off" placeholder="Full name">
 <label for="bm">Email</label><input id="bm" type="email" placeholder="name@example.com">
 <label for="br">Role</label><select id="br"><option>${R.B}</option><option>${R.A}</option><option>${R.N}</option><option>${R.C}</option></select>
 <label for="ba">National Association (Country President and Club Chairman only)</label><input id="ba" list="asl" autocomplete="off">
 <label for="bt">Table (Club Chairman only)</label><input id="bt" list="tbl" autocomplete="off">
 <button class="p" data-g="addB">Add person</button></div>`;ddown($('#br'))}
-$('#g').onclick=e=>{const b=e.target.closest('button');if(!b||!isAdm())return;const d=b.dataset;
+$('#g').onclick=async e=>{const b=e.target.closest('button');if(!b||!isAdm())return;const d=b.dataset;
+if(d.inv!==undefined&&SHARED){const x=S.access[+d.inv];if(!x)return;await flushNow();const r=await api('',{action:'invite',token:TOK,email:x.email}).catch(()=>null);if(r&&r.ok){CODE={email:x.email,code:r.code};setup()}else msg((r&&r.error)||'Could not create a code');return}
+if(d.g==='refresh'){await pullNow(true);msg('Up to date');return}
+if(d.g==='nosample'){if(!CLR){CLR=true;setup();return}CLR=false;removeSamples();save();render();msg('Sample data removed');return}
 if(d.g==='pct'){const v=+$('#gp').value;if(!(v>=1&&v<=100))return shake($('#gp'));S.pct=v}
 else if(d.g==='pts'){S.pts=S.pts||{};Object.keys(BASE).forEach(t=>{const v=$('#pt_'+t).value;S.pts[t]=v===''?BASE[t]:Math.max(0,Math.round(+v))})}
 else if(d.g==='addA'){const n=canonA($('#an').value);if(!n)return shake($('#an'));if(S.assocs.some(a=>same(a.name,n)))return msg('That association is already listed');S.assocs.push({name:n,members:Math.max(0,+$('#am').value||0)})}
 else if(d.ad!==undefined)S.assocs.splice(+d.ad,1);
-else if(d.g==='addB'){const m=$('#bm').value.trim().toLowerCase(),cat=$('#br').value,nm=norm($('#bn').value),needA=cat===R.N||cat===R.C,a=needA?canonA($('#ba').value):'',t=norm($('#bt').value);if(!nm)return shake($('#bn'));if(!/^\S+@\S+\.\S+$/.test(m))return shake($('#bm'));if(needA&&!a)return shake($('#ba'));if(cat===R.C&&!t)return shake($('#bt'));if(S.access.some(x=>x.email===m))return msg('That email already has access');S.access.push({name:nm,email:m,cat,assoc:a,table:cat===R.C?t:''})}
+else if(d.g==='addB'){const m=$('#bm').value.trim().toLowerCase(),cat=$('#br').value,nm=norm($('#bnm').value),needA=cat===R.N||cat===R.C,a=needA?canonA($('#ba').value):'',t=norm($('#bt').value);if(!nm)return shake($('#bnm'));if(!/^\S+@\S+\.\S+$/.test(m))return shake($('#bm'));if(needA&&!a)return shake($('#ba'));if(cat===R.C&&!t)return shake($('#bt'));if(S.access.some(x=>x.email===m))return msg('That email already has access');S.access.push({name:nm,email:m,cat,assoc:a,table:cat===R.C?t:''});if(SHARED){save();flushNow().then(()=>api('',{action:'invite',token:TOK,email:m})).then(r=>{if(r&&r.ok){CODE={email:m,code:r.code};setup()}})}}
 else if(d.bd!==undefined){const x=S.access[+d.bd];if(!x||x.cat===R.X)return;S.access.splice(+d.bd,1)}
 else return;save();render();msg('Saved')};
 $('#g').onchange=e=>{if(e.target.dataset.ts!==undefined&&isAdm()){const v=Math.round(+e.target.value||0),k=e.target.dataset.ts;if(v>0)S.tsz[k]=Math.min(500,v);else delete S.tsz[k];save();render();return}const i=e.target.dataset.ai;if(i===undefined||!isAdm())return;S.assocs[+i].members=Math.max(0,+e.target.value||0);save();render()};
 function rep(){const c=calc();$('#rs').innerHTML=`<div class="row"><span>Net new members</span><span class="pt">${c.net} / ${c.tgt}</span></div><div class="row"><span>Approved entries</span><span class="pt">${c.ok.length}</span></div><div class="row"><span>Leading association (growth %)</span><span class="pt">${c.assocs[0]?esc(c.assocs[0].n):'-'}</span></div><div class="row"><span>Leading Table</span><span class="pt">${c.tbls[0]?esc(c.tbls[0].n):'-'}</span></div>`}
-function render(){banner();dash();evs();ver();awd();setup();rep();lists();deco();anim()}
+function render(){const ch=document.querySelector('.chip');if(ch)ch.hidden=!hasSample();banner();dash();evs();ver();awd();setup();rep();lists();deco();anim()}
 function lists(){$('#cty').innerHTML=Object.keys(CITY).map(k=>`<option value="${esc(k)}">`).join('');const as=[...new Set([...S.assocs.map(a=>a.name),...S.entries.map(e=>e.assoc),...SUGG])];$('#asl').innerHTML=as.map(a=>`<option value="${esc(a)}">`).join('');fillTypes();fillFilters();tabl()}
 function tabl(){const a=$('#fa').value;const t=[...new Set(S.entries.filter(e=>!a||same(e.assoc,a)).map(e=>e.table))];$('#tbl').innerHTML=t.map(x=>`<option value="${esc(x)}">`).join('');const n=[...new Set(S.entries.filter(e=>same(e.assoc,a)&&same(e.table,$('#ft').value)).map(e=>e.tabler))];$('#trs').innerHTML=n.map(x=>`<option value="${esc(x)}">`).join('');const sz=(S.tsz||{})[tkey($('#fa').value,$('#ft').value)];if(sz&&document.activeElement!==$('#fm'))$('#fm').value=sz}
 function enter(){$('#gate').hidden=!!U;$('#app').hidden=true;if(!U)return;
 $('#who').innerHTML=esc(U.name||U.email)+'<small>'+(U.board?esc(U.cat)+(U.assoc?' · '+esc(U.assoc):'')+(U.table?' · '+esc(U.table):''):'Tabler · can submit, cannot confirm')+'</small>';
-$('#tg').hidden=!isAdm();$('#et').innerHTML='';
+$('#tg').hidden=!isAdm();$('#et').innerHTML='';if(SHARED){if(!$('#sy'))$('#who').insertAdjacentHTML('afterend','<small id="sy" class="mut"></small>');$('#sy').textContent=SYNMSG();seedIfEmpty()}
 splash(U.board?'Welcome, '+(U.name||U.cat).split(' ')[0]:'Welcome, Tabler',()=>{$('#app').hidden=false;render();setTimeout(notifyUpd,1200)})}
 function fill(){['#fo','#fe'].forEach(s=>ddown($(s)));$('#fd').value=new Date().toISOString().slice(0,10);try{$('#fr').value=localStorage.getItem('ami-name')||'';$('#fa').value=localStorage.getItem('ami-assoc')||'';$('#ft').value=localStorage.getItem('ami-table')||''}catch(x){}lists();prev()}
 function prev(){$('#pp').textContent='This entry is worth '+PT($('#fy').value)+' pts once approved.'}
 let PWS={};try{PWS=JSON.parse(localStorage.getItem(PWK))||{}}catch(x){}
 const hp=async(p,s)=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p)))].map(x=>x.toString(16).padStart(2,'0')).join('');
-$('#em').oninput=()=>{$('#pwb').hidden=true;$('#pw').value='';$('#pw2').value=''};
+$('#em').oninput=()=>{$('#pwb').hidden=true;$('#icb').hidden=true;$('#pw').value='';$('#pw2').value='';$('#ic').value=''};
 $('#in').onclick=async()=>{const m=$('#em').value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(m)){shake($('#em'));return msg('Enter a valid email')}
+if(SHARED&&!LOADED){await busy($('#in'),200);if(!await waitLoaded()){return msg('Cannot reach the shared data. Check your connection and try again.')}}
 const a=S.access.find(x=>x.email===m);
+if(a&&SHARED){const st=await api('?action=status&email='+encodeURIComponent(m)).catch(()=>null);if(!st||!st.ok)return msg('Cannot reach the shared data. Try again.');const act=st.state==='activate',p=$('#pw').value;$('#pwb').hidden=false;$('#icb').hidden=!act;$('#pc').hidden=!act;$('#pl').textContent=act?'Create your password (8+ characters)':'Board password';
+if(!p||(act&&!$('#ic').value.trim())){(act?$('#ic'):$('#pw')).focus();return}
+if(act){if(p.length<8){shake($('#pw'));return msg('Use at least 8 characters')}if(p!==$('#pw2').value){shake($('#pw2'));return msg('Passwords do not match')}}
+await busy($('#in'),300);const r=await api('',{action:'login',email:m,password:p,code:act?$('#ic').value:''}).catch(()=>null);if(!r)return msg('Cannot reach the shared data. Try again.');if(!r.ok){shake($('#pw'));return msg(r.error||'Sign-in failed')}
+TOK=r.token;U={email:m,name:r.user.name||'',cat:r.user.cat,assoc:r.user.assoc||'',table:r.user.table||'',board:true};await pullNow(true);enter();return}
 if(a){const first=!PWS[m],p=$('#pw').value;$('#pwb').hidden=false;$('#pc').hidden=!first;$('#pl').textContent=first?'Create your board password (8+ characters)':'Board password';
 if(!p){$('#pw').focus();return}
 if(first){if(p.length<8){shake($('#pw'));return msg('Use at least 8 characters')}if(p!==$('#pw2').value){shake($('#pw2'));return msg('Passwords do not match')}}
 await busy($('#in'),2200);
 try{if(first){const sl=crypto.randomUUID();PWS[m]={s:sl,h:await hp(p,sl)};localStorage.setItem(PWK,JSON.stringify(PWS))}else if(await hp(p,PWS[m].s)!==PWS[m].h){shake($('#pw'));return msg('Incorrect password')}}catch(x){return msg('Secure sign-in is unavailable in this view')}
 U={email:m,name:a.name||'',cat:a.cat,assoc:a.assoc,table:a.table,board:true}}
-else{await busy($('#in'),2200);U={email:m,cat:'Tabler',assoc:'',table:'',board:false}}
+else{await busy($('#in'),SHARED?300:2200);U={email:m,cat:'Tabler',assoc:'',table:'',board:false}}
 try{if(!U.board)localStorage.setItem(KU,JSON.stringify(U))}catch(x){}enter()};
-$('#out').onclick=()=>{U=null;try{localStorage.removeItem(KU)}catch(x){}enter()};
+$('#out').onclick=()=>{if(TOK){api('',{action:'logout',token:TOK}).catch(()=>{});TOK=null}U=null;try{localStorage.removeItem(KU)}catch(x){}enter()};
 $('#fy').onchange=prev;$('#fa').oninput=tabl;$('#ft').oninput=tabl;
 $('#pdn').oninput=()=>{$('#pdc').textContent=$('#pdn').value.length+' / 140'};
 $('#tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;const cur=document.querySelector('.v.on'),nx=$('#'+b.dataset.v);if(cur===nx)return;document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cur.classList.add('fo');setTimeout(()=>{cur.classList.remove('on','fo');nx.classList.add('on')},500)};
@@ -587,7 +600,7 @@ $('#gl').onclick=()=>{const b=$('#gl'),no=()=>{b.classList.remove('load');msg('L
 $('#sub').onclick=async()=>{const bad=(el,t)=>{shake(el);msg(t)};if(!norm($('#fa').value))return bad($('#fa'),'Enter your National Association');if(!norm($('#ft').value))return bad($('#ft'),'Enter your Table name');if(!norm($('#fr').value))return bad($('#fr'),'Type your name');if(!$('#fg').value.trim())return bad($('#fg'),'Enter the guest or prospect name');if(!$('#fd').value)return bad($('#fd'),'Choose a date');if(!PH)return bad($('#pb2'),'A photo is required as evidence');if(norm($('#pdn').value).length<5)return bad($('#pdn'),'Add a short description of the photo');const fm=Math.round(+$('#fm').value||0);if($('#fm').value!==''&&!(fm>=1&&fm<=500))return bad($('#fm'),'Enter your Table size as a number from 1 to 500');const dup=S.entries.find(e=>e.status!=='rejected'&&e.type===$('#fy').value&&same(e.assoc,canonA($('#fa').value))&&gkey(e.guest)===gkey($('#fg').value));if(dup)return bad($('#fg'),'This guest already has a '+LABEL[dup.type]+' entry');if(!$('#cs').checked)return bad($('#cs'),'Confirm the guest consent');await busy($('#sub'));
 const as=canonA($('#fa').value),tb=canonT(as,$('#ft').value),loc=norm($('#fl').value),gp=PL&&PL.t===loc?{lat:PL.lat,lng:PL.lng}:cpt(loc);
 if(fm>0){S.tsz=S.tsz||{};S.tsz[tkey(as,tb)]=fm}S.entries.push({id:Date.now(),assoc:as,table:tb,tabler:canon($('#fr').value,as),type:$('#fy').value,guest:$('#fg').value.trim(),contact:$('#fc').value,occ:$('#fo').value,date:$('#fd').value,event:$('#fe').value,notes:$('#fn').value,photo:PH.d,pr:PH.r,pd:norm($('#pdn').value),loc,lat:gp.lat,lng:gp.lng,status:'submitted'});
-try{localStorage.setItem('ami-name',S.entries[S.entries.length-1].tabler);localStorage.setItem('ami-assoc',as);localStorage.setItem('ami-table',tb)}catch(x){}save();['fg','fc','fo','fe','fn','pdn','fl'].forEach(i=>$('#'+i).value='');PL=null;$('#pdc').textContent='0 / 140';$('#cs').checked=false;['#fo','#fe'].forEach(s=>ddown($(s)));$('#pst').textContent='';$('#pv').hidden=true;PH=null;render();msg('Entry submitted for confirmation');confetti()};
+try{localStorage.setItem('ami-name',S.entries[S.entries.length-1].tabler);localStorage.setItem('ami-assoc',as);localStorage.setItem('ami-table',tb)}catch(x){}if(SHARED){const okk=await flushNow();if(!okk){S.entries.pop();msg('No connection. Your entry was not sent. Please try again.');return}}else save();['fg','fc','fo','fe','fn','pdn','fl'].forEach(i=>$('#'+i).value='');PL=null;$('#pdc').textContent='0 / 140';$('#cs').checked=false;['#fo','#fe'].forEach(s=>ddown($(s)));$('#pst').textContent='';$('#pv').hidden=true;PH=null;render();msg('Entry submitted for confirmation');confetti()};
 const logoPng=()=>new Promise(r=>{const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=320;c.getContext('2d').drawImage(im,0,0,320,320);r(c.toDataURL('image/png'))}catch(x){r(null)}};im.onerror=()=>r(null);im.src=LOGO});
 const mkpdf=async()=>{if(!window.jspdf)return msg('PDF library did not load');const{jsPDF}=window.jspdf,doc=new jsPDF(),c=calc(),m=tally();let y=38;const lp=await logoPng();if(lp){try{doc.addImage(lp,'PNG',14,10,22,22)}catch(x){}}
 const ln=(t,s=10,b=false)=>{if(y>280){doc.addPage();y=18}doc.setFontSize(s);doc.setFont('helvetica',b?'bold':'normal');doc.text(doc.splitTextToSize(String(t),180),14,y);y+=s*.5+2};
@@ -600,7 +613,7 @@ ln('Table standings',12,true);c.tbls.forEach((t,i)=>ln((i+1)+'. '+t.n+' ('+t.a+'
 ln('Growth Champion (inductions as % of country target)',12,true);c.champs.slice(0,5).forEach((t,i)=>ln((i+1)+'. '+t.n+' ('+t.a+') - '+t.cp.toFixed(0)+'%'+(t.gc?' | +'+t.gc+' pts toward Tabler of the Year':'')));y+=2;ln('Tabler of the Year points (entries + pipeline bonus + Growth Champion points)',12,true);c.tabs.forEach((t,i)=>ln((i+1)+'. '+t.n+' ('+t.t+', '+t.a+') - '+t.p+' pts'+(t.pb||t.gc?' (pipeline '+t.pb+', champion '+t.gc+')':'')));y+=2;
 ln('Approved evidence',12,true);
 c.ok.forEach(e=>{ln(e.date+' | '+e.tabler+' | '+e.table+' | '+e.assoc+' | '+LABEL[e.type]+' | '+e.guest+' | '+pts(e)+' pts'+(e.loc?' | '+e.loc:''));
-if(e.photo){const w=40,h=w*e.pr;if(y+h+8>285){doc.addPage();y=18}try{doc.addImage(e.photo,'JPEG',14,y,w,h);y+=h+4}catch(x){}if(e.pd){doc.setFontSize(9);doc.setFont('helvetica','italic');doc.text(doc.splitTextToSize('Photo: '+e.pd,180),14,y);y+=8}}});
+if(e.photo){const w=40,h=w*e.pr;if(y+h+8>285){doc.addPage();y=18}try{doc.addImage(e.photoD||e.photo,'JPEG',14,y,w,h);y+=h+4}catch(x){}if(e.pd){doc.setFontSize(9);doc.setFont('helvetica','italic');doc.text(doc.splitTextToSize('Photo: '+e.pd,180),14,y);y+=8}}});
 let dl=null;try{dl=window.claude&&await claude.use('downloads')}catch(x){}
 if(!dl)return msg('Download is not available in this view');
 try{await dl.save({filename:'AMI-Recruitment-Drive-Report.pdf',data:doc.output('blob')});msg('Report ready')}catch(x){if(!x||x.code!=='declined')msg('Could not save the report')}};
@@ -704,5 +717,42 @@ return `<svg class="spm" viewBox="216 136 424 448" aria-hidden="true">${h}</svg>
 function splash(t,done){const s=$('#sp');s.innerHTML=sceneHtml();$('#spt').innerHTML=esc(t)+'<small>Connecting Africa · Middle East · Indian Ocean</small>';s.style.opacity=1;s.hidden=false;let fin=0,tm;const go=()=>{if(fin)return;fin=1;clearTimeout(tm);s.onclick=null;s.style.opacity=0;done();setTimeout(()=>{s.hidden=true;s.innerHTML=''},1640)};const rm=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion:reduce)').matches;tm=setTimeout(go,rm?3000:11500);s.onclick=go}
 function applyLogo(){$('#lgb').innerHTML='<img src="'+LOGO+'" alt="Round Table AMI">';document.body.style.setProperty('--wm','url("'+LOGO+'")')}
 function confetti(){const c=['--c-rec','--c-att','--c-pro','--c-ind','--c-bon'];for(let i=0;i<30;i++){const e=document.createElement('i');e.className='cf';e.style.cssText=`left:${40+Math.random()*20}%;background:var(${c[i%c.length]});--dx:${(Math.random()-.5)*280}px;--dy:${-130-Math.random()*220}px;--r:${Math.random()*720}deg;animation-delay:${Math.random()*.25}s`;document.body.appendChild(e);setTimeout(()=>e.remove(),2800)}}
+
+/* ---------- shared data (Google Sheets) ---------- */
+let TOK=null,RAW=new Map(),SYN=new Map(),SINCE=0,LOADED=false,ONL=true,PTM=0,Q=Promise.resolve(),LASTOK=0,DEFER=false,CODE=null,CLR=false;
+const api=async(path,body)=>{const r=body?await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(body)}):await fetch(API+path);return r.json()};
+const hasSample=()=>S.entries.some(e=>/^Sample /.test(e.guest))||S.events.some(e=>e.venue==='Sample venue');
+function removeSamples(){S.entries=S.entries.filter(e=>!/^Sample /.test(e.guest));S.events=S.events.filter(e=>e.venue!=='Sample venue');Object.keys(S.tsz||{}).forEach(k=>{if(/sample table/.test(k))delete S.tsz[k]})}
+const SYNMSG=()=>!SHARED?'':ONL?(LASTOK?'Last synced '+new Date(LASTOK).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'.':'Connecting...'):'Not connected: changes will be sent when the connection returns.';
+function toRows(s){const m=new Map(),J=JSON.stringify;s.entries.forEach(e=>m.set('entry:'+e.id,J(e)));s.events.forEach(e=>m.set('event:'+e.id,J(e)));m.set('meta:assocs',J(s.assocs));m.set('meta:pts',J(s.pts||{}));m.set('meta:pct',J(s.pct));m.set('meta:access',J(s.access));Object.entries(s.tsz||{}).forEach(([k,v])=>m.set('tsz:'+k,J(v)));Object.entries(s.votes||{}).forEach(([a,o])=>Object.entries(o).forEach(([em,v])=>m.set('vote:'+a+':'+em,J(v))));Object.entries(s.final||{}).forEach(([a,v])=>m.set('final:'+a,J(v)));return m}
+function fromRaw(){const s=Object.assign({},S);s.entries=[];s.events=[];s.tsz={};s.votes={};s.final={};
+for(const[k,j]of RAW){let v;try{v=JSON.parse(j)}catch(x){continue}
+if(k.startsWith('entry:'))s.entries.push(v);else if(k.startsWith('event:'))s.events.push(v);else if(k==='meta:assocs')s.assocs=v;else if(k==='meta:pts')s.pts=v;else if(k==='meta:pct')s.pct=v;else if(k==='meta:access')s.access=v;else if(k.startsWith('tsz:'))s.tsz[k.slice(4)]=v;else if(k.startsWith('vote:')){const p=k.split(':');(s.votes[p[1]]=s.votes[p[1]]||{})[p.slice(2).join(':')]=v}else if(k.startsWith('final:'))s.final[k.slice(6)]=v}
+s.entries.sort((a,b)=>a.id-b.id);s.events.sort((a,b)=>a.id-b.id);return s}
+const diff=()=>{const cur=toRows(S),puts=[],dels=[];for(const[k,v]of cur)if(SYN.get(k)!==v)puts.push([k,v]);for(const k of SYN.keys())if(!cur.has(k))dels.push(k);return{cur,puts,dels}};
+const setOn=v=>{ONL=v;const el=$('#sy');if(el)el.textContent=SYNMSG();};
+function paint(){if(!U)return;const a=document.activeElement,typing=a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&a.closest('#g,#c,#e,#a');if(typing||EEN!==null){DEFER=true;return}DEFER=false;render();const el=$('#sy');if(el)el.textContent=SYNMSG()}
+document.addEventListener('focusout',()=>{if(DEFER)setTimeout(paint,250)});
+async function pushOnce(){const d0=diff();if(!d0.puts.length&&!d0.dels.length)return true;
+for(const e of S.entries){if(e.photo&&String(e.photo).startsWith('data:')&&d0.puts.some(p=>p[0]==='entry:'+e.id)){const r=await api('',{action:'photo',data:e.photo,token:TOK});if(!r.ok)throw new Error('photo');e.photo=r.url}}
+const d=diff(),r=await api('',{action:'put',token:TOK,puts:d.puts.map(([k,v])=>({k,v})),dels:d.dels});if(!r.ok)throw new Error('put');
+const rej=new Set(r.rejected||[]);d.puts.forEach(([k,v])=>{if(!rej.has(k)){RAW.set(k,v);}});d.dels.forEach(k=>{if(!rej.has(k))RAW.delete(k)});
+if(rej.size){S=fromRaw();msg('Some changes were not allowed for your role and were undone')}SYN=toRows(S);LASTOK=Date.now();setOn(true);if(rej.size)paint();return true}
+const isDirty=()=>{const d=diff();return d.puts.length>0||d.dels.length>0};
+let RAWD=false;
+async function pullOnce(force){const r=await api('?action=all&since='+(force?0:SINCE)+(TOK?'&token='+encodeURIComponent(TOK):'')+'&_='+Date.now());if(!r.ok)throw new Error('pull');
+if(force||!SINCE)RAW=new Map();if(force)RAWD=true;r.rows.forEach(x=>{RAWD=true;if(x.d)RAW.delete(x.k);else RAW.set(x.k,x.v)});SINCE=Math.max(1,r.now-5000);
+if(RAWD&&(!LOADED||force||!isDirty())){S=fromRaw();SYN=toRows(S);RAWD=false;LOADED=true;LASTOK=Date.now();setOn(true);paint();return}
+LOADED=true;LASTOK=Date.now();setOn(true);if(RAWD)schedPush()}
+const run=f=>{Q=Q.then(f).catch(e=>{setOn(false);if(String(e&&e.message)!=='pull')retry()});return Q};
+let RT=0;const retry=()=>{clearTimeout(RT);RT=setTimeout(()=>run(cycle),15000)};
+async function cycle(){await pushOnce();await pullOnce(false)}
+function schedPush(){clearTimeout(PTM);PTM=setTimeout(()=>run(cycle),350)}
+const pullNow=force=>run(async()=>{await pushOnce();await pullOnce(!!force)});
+async function flushNow(){clearTimeout(PTM);let ok=true;await run(async()=>{try{await pushOnce()}catch(x){ok=false;throw x}}).catch(()=>{ok=false});return ok}
+const waitLoaded=async()=>{for(let i=0;i<30&&!LOADED;i++){if(i%8===0)run(()=>pullOnce(true));await new Promise(r=>setTimeout(r,500))}return LOADED};
+async function seedIfEmpty(){if(!SHARED||!U||U.cat!==R.X||RAW.has('meta:assocs'))return;const sd=seed();S=Object.assign(S,{assocs:sd.assocs,pct:sd.pct,pts:{},access:RAW.has('meta:access')?S.access:sd.access,entries:sd.entries,events:sd.events,tsz:sd.tsz,votes:{},final:{}});msg('Setting up the shared data with sample entries...');await flushNow();paint()}
+if(SHARED){run(()=>pullOnce(true));setInterval(()=>{if(!document.hidden&&U)run(cycle)},30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&U)run(cycle)});window.addEventListener('online',()=>run(cycle));
+window.addEventListener('beforeunload',e=>{if(SHARED&&(diff().puts.length||diff().dels.length)){e.preventDefault();e.returnValue=''}})}
 applyLogo();deco();fill();enter();
 </script>
